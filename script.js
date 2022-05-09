@@ -94,16 +94,16 @@ const gamePlay = (() => {
         displayController.changeTile(aiTileIndex, aiTile);
     }
 
-    //const _aiChooseEasy = () => {
-        // const availableTiles = []
-        // for (let i = 0; i < gameBoard.arr.length; i++) {
-        //     if (gameBoard.arr[i] == 'empty') {
-        //         availableTiles.push(i)
-        //     }
-        // }
-        // let index = availableTiles[Math.floor(Math.random() * (availableTiles.length - 1))]
-        // return index
-    //}
+    const _aiChooseEasy = () => {
+        const availableTiles = []
+        for (let i = 0; i < gameBoard.arr.length; i++) {
+            if (gameBoard.arr[i] == 'empty') {
+                availableTiles.push(i)
+            }
+        }
+        let index = availableTiles[Math.floor(Math.random() * (availableTiles.length - 1))]
+        return index
+    }
 
     const _aiChooseTile = () => {
         
@@ -194,7 +194,7 @@ const displayController = (() => {
             tile.innerText = '';
         };
         document.getElementById('winner-name').innerText = '';
-        document.getElementById('winner-type').innerText = 'Congratulations!'
+        document.getElementById('winner-type').innerText = 'Congratulations!';
         turn = 'X';
     };
 
@@ -205,15 +205,20 @@ const displayController = (() => {
             startMenu.style.display == 'block' | startMenu.style.display == '' ? 
                 startMenu.style.display = 'none' :
                 (startMenu.style.display = 'block', 
-                    document.getElementById('winner-menu').style.display = 'none') 
+                    document.getElementById('winner-menu').style.display = 'none'); 
         };
         const showWinner = (winner) => {
             document.getElementById('winner-menu').style.display = 'block';
             let winnerName = document.getElementById('winner-name');
             let winnerType = document.getElementById('winner-type');
             winner == 'tie' ? winnerType.innerText = 'It\'s a Tie' :
-                winnerName.innerText = winner == 'X' ? players.one : players.two;
-        }
+                winnerName.innerText = winner == 'X' ? 
+                    players.one : 
+                    players.two != 'Super Computer'? 
+                        players.two :
+                            (winnerType.innerText = 'You Lost',
+                            winnerName.innerText = 'better luck next time');
+        };
 
         const togglePlayer = (type) => {
                 let inputTwo = document.getElementById('input-two');
@@ -221,12 +226,12 @@ const displayController = (() => {
                 if (type == 'AI') {
                 inputTwo.value = "Super Computer";
                 inputTwo.disabled = true;
-                button.innerText = 'Play Against Human'
+                button.innerText = 'Play Against Human';
                 } else {
                     inputTwo.value = '';
                     inputTwo.disabled = false;
-                    button.innerText = 'Play Against AI'
-                }
+                    button.innerText = 'Play Against AI';
+                };
         }
         return {showReq, toggle, showWinner, togglePlayer};
     })();
