@@ -13,10 +13,18 @@ const gameBoard = (() => {
         'empty', 'empty', 'empty',
         'empty', 'empty', 'empty',]
 
+    let menu = {
+
+    }
+
     return {arr, reset}
 })();
 
 const gamePlay = (() => {
+    const startGame = () => {
+        document.getElementById('menu').style.display = 'none'
+    }
+
     const _checkWin = () => {
         let winners = [[0,1,2], [3,4,5], [6,7,8], 
                 [0,3,6], [1,4,7], [2,5,8], [0,4,8], [2,4,6]]
@@ -50,7 +58,7 @@ const gamePlay = (() => {
             _changeTurn()
         }
     }
-    return {playTile}
+    return {playTile, startGame}
 })();
 
 
@@ -59,7 +67,9 @@ const displayController = (() => {
         for (let i = 0; i < gameBoard.arr.length; i++) {
             let tile = document.getElementById(i+1)
             tile.addEventListener('mousedown', gamePlay.playTile)
+           
         }
+        document.getElementById('start').addEventListener('click', gamePlay.startGame)
     })();
 
     const changeTile = (index, tile) => {
