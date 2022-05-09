@@ -12,15 +12,16 @@ h1 {
     grid-template-columns: repeat(3, 22vh);
     grid-template-rows: repeat(3, 22vh);
     gap: 20px;
-    background-color: black;
+    background-color: rgb(238, 174, 255);
     width:min-content;
     margin: 0 auto;
 }
 
 .tile {
-    background-color: blanchedalmond;
+    background-color: white;
     font-size: 22vh;
     text-align: center;
+    color: purple
 }
 
 .menus {
@@ -45,14 +46,22 @@ h1 {
     font-size: 2vw;
     padding: 10px;
     border-radius: 10px;
-    border: none;
+    border: 3px pink solid;
+}
+
+#inputs input:hover, #inputs input:focus-within{
+    border: 3px darkmagenta solid;
+}
+
+input:focus {
+    outline: none;
 }
 
 #start-button, #new-button {
     font-size: 5vw;
     margin-top: 10vh;
     border-radius: 10px;
-    border: none;
+    
     padding: 10px 25px;
     
 }
@@ -78,6 +87,23 @@ h2 {
     font-size: 2vw;
     margin-top: 10vh;
     border-radius: 10px;
-    border: none;
+    
     padding: 10px 25px;
+}
+
+button {
+    border: 3px pink solid;
+}
+
+button:hover {
+    border: 3px darkmagenta solid;
+
+}
+
+#inputs .disabled {
+    border: 3px transparent solid;
+}
+
+#inputs .disabled:hover {
+    border: 3px transparent solid;
 }

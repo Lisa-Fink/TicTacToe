@@ -196,6 +196,7 @@ const displayController = (() => {
         document.getElementById('winner-name').innerText = '';
         document.getElementById('winner-type').innerText = 'Congratulations!';
         turn = 'X';
+        document.getElementById('req').style.display = 'none';
     };
 
     const menu = (() => {
@@ -226,6 +227,7 @@ const displayController = (() => {
                 if (type == 'AI') {
                 inputTwo.value = "Super Computer";
                 inputTwo.disabled = true;
+                inputTwo.classList.add('disabled')
                 button.innerText = 'Play Against Human';
                 } else {
                     inputTwo.value = '';
