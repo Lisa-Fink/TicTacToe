@@ -1,13 +1,24 @@
+body {
+    font-family: 'Courier New', Courier, monospace;
+}
+
+h1 {
+    font-size: 50px;
+    text-align: center;
+}
+
 #game-board {
     display:grid;
-    grid-template-columns: repeat(3, 150px);
-    grid-template-rows: repeat(3, 150px);
+    grid-template-columns: repeat(3, 22vh);
+    grid-template-rows: repeat(3, 22vh);
     gap: 20px;
     background-color: black;
-    width:min-content
+    width:min-content;
+    margin: 0 auto;
 }
 
 .tile {
     background-color: blanchedalmond;
-    
+    font-size: 22vh;
+    text-align: center;
 }
