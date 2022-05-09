@@ -1,0 +1,13 @@
+#game-board {
+    display:grid;
+    grid-template-columns: repeat(3, 150px);
+    grid-template-rows: repeat(3, 150px);
+    gap: 20px;
+    background-color: black;
+    width:min-content
+}
+
+.tile {
+    background-color: blanchedalmond;
+    
+}
