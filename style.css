@@ -35,7 +35,7 @@ h1 {
 }
 
 #inputs {
-    margin-top: 20vh;
+    margin-top: 10vh;
     display: flex;
     justify-content: center;
     gap: 2vw
@@ -72,4 +72,12 @@ h1 {
 
 h2 {
     font-size: 40px;
+}
+
+#vs-button {
+    font-size: 2vw;
+    margin-top: 10vh;
+    border-radius: 10px;
+    border: none;
+    padding: 10px 25px;
 }
