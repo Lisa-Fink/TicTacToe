@@ -13,16 +13,16 @@ const gameBoard = (() => {
         displayController.clear();
     };
     let arr = 
-        ['X', 'O', 'empty',
+        ['empty', 'empty', 'empty',
         'empty', 'empty', 'empty',
         'empty', 'empty', 'empty',];
-
-
     return {arr, reset};
 })();
 
 const gamePlay = (() => {
     let _playerTwo = 'human';
+    let _end = false;
+    
     const startGame = (e) => {
         e.preventDefault();
         if (e.target.form[1].value == '' | 
@@ -36,6 +36,7 @@ const gamePlay = (() => {
     };
 
     const newGame = () => {
+        _end = false
         displayController.clear();
         gameBoard.reset();
         displayController.menu.toggle();
@@ -49,13 +50,16 @@ const gamePlay = (() => {
                 gameBoard.arr[wins[1]] === gameBoard.arr[wins[2]]) &&
                 gameBoard.arr[wins[1]] != 'empty') {
                 displayController.menu.showWinner(gameBoard.arr[wins[1]]);
-                };
-            };
+                _end = true;
+                }
+            }
+        _end == false ? _checkTie(): null
         };
     
-    const _checkEnd = () => {
+    const _checkTie = () => {
         if (gameBoard.arr.filter(tile => tile == 'empty') == 0) {
             displayController.menu.showWinner('tie');
+            _end = true;
         };
     };
 
@@ -65,13 +69,39 @@ const gamePlay = (() => {
 
     const playTile = (e) => {
         let tile = document.getElementById(e.target.id);
-        if (tile.innerText != 'X' && tile.innerText != 'O') {
+        if (tile.innerText == '') {
             displayController.changeTile(Number(e.target.id) - 1, tile);
-            _checkWin();
-            _checkEnd();
-            _changeTurn();
+            _endTurn();
         };
     };
+
+    const _endTurn = () => {
+        _checkWin();
+        _changeTurn();
+
+        if (turn == 'O' && _playerTwo == 'AI' && _end == false) {
+            _ai_playTile();
+            _endTurn();
+        };
+    };
+
+    const _ai_playTile = () => {
+        let aiTileIndex = _ai_choice()
+        let aiTile = document.getElementById(aiTileIndex + 1)
+        displayController.changeTile(aiTileIndex, aiTile)
+    }
+
+    const _ai_choice = () => {
+        const availableTiles = []
+        for (let i = 0; i < gameBoard.arr.length; i++) {
+            if (gameBoard.arr[i] == 'empty') {
+                availableTiles.push(i)
+            }
+        }
+        let index = availableTiles[Math.floor(Math.random() * (availableTiles.length - 1))]
+        return index
+        
+    }
 
     const togglePlayer = (e) => {
         e.preventDefault();
@@ -95,7 +125,7 @@ const displayController = (() => {
 
     const changeTile = (index, tile) => {
         gameBoard.arr[index] = turn == 'X' ? 'X' : 'O';
-        tile.innerText = turn == 'X' ? 'X' : 'O'   ;
+        tile.innerText = turn == 'X' ? 'X' : 'O';
     };
 
     const clear = () => {
@@ -104,6 +134,7 @@ const displayController = (() => {
             tile.innerText = '';
         };
         document.getElementById('winner-name').innerText = '';
+        document.getElementById('winner-type').innerText = 'Congratulations!'
         turn = 'X';
     };
 
