@@ -10,10 +10,22 @@
 </head>
 <body>
     <h1>Tic Tac Toe</h1>
-    <div id="menu">
-        <div id="button-div">
-            <button id="start">Start Game</button>
+    <div class="menus" id="winner-menu">
+        <h2 id="winner-type">Congratulations</h2>
+        <h2 id="winner-name"></h2>
+        <button id="new-button">New Game</button>
+    </div>
+    <div class="menus" id="start-menu">
+        <form>
+        <div id="inputs">
+        <input type="text" placeholder="Player One">
+        <input type="text" placeholder="Player Two">
         </div>
+        
+        <div id="button-div">
+            <button id="start-button">Start Game</button>
+            <div id="req">Please enter a name for both players!</div>
+        </div></form>>
     </div>
     <div id="game-board">
         <div class="tile" id="1"></div>
@@ -28,3 +40,4 @@
     </div>
 </body>
 </html>
+

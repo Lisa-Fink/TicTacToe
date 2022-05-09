@@ -9,20 +9,32 @@ const gameBoard = (() => {
         displayController.clear()
     }
     let arr = 
-        ['empty', 'empty', 'empty',
+        ['X', 'O', 'empty',
         'empty', 'empty', 'empty',
         'empty', 'empty', 'empty',]
 
-    let menu = {
-
-    }
 
     return {arr, reset}
 })();
 
 const gamePlay = (() => {
-    const startGame = () => {
-        document.getElementById('menu').style.display = 'none'
+    const startGame = (e) => {
+        e.preventDefault()
+        if (e.target.form[0].value == '' | 
+            e.target.form[1].value == '') {
+            displayController.menu.showReq()
+        } else {
+            displayController.menu.toggle()
+            players.one = (e.target.form[0].value)
+            players.two = (e.target.form[1].value)
+        }
+        
+    }
+
+    const newGame = () => {
+        displayController.clear()
+        gameBoard.reset()
+        displayController.menu.toggle()
     }
 
     const _checkWin = () => {
@@ -32,8 +44,7 @@ const gamePlay = (() => {
             if ((gameBoard.arr[wins[0]] === gameBoard.arr[wins[1]] && 
                 gameBoard.arr[wins[1]] === gameBoard.arr[wins[2]]) &&
                 gameBoard.arr[wins[1]] != 'empty') {
-                console.log('end')
-                gameBoard.reset()
+                displayController.menu.showWinner(gameBoard.arr[wins[1]])
                 }
             }
         }
@@ -41,11 +52,11 @@ const gamePlay = (() => {
     const _checkEnd = () => {
         if (gameBoard.arr.filter(tile => tile == 'empty') == 0) {
             console.log('end no winner')
-            gameBoard.reset()
+            displayController.menu.showWinner('tie')
         }
     }
 
-        const _changeTurn = () => {
+    const _changeTurn = () => {
         turn = turn == 'X' ? 'O' : 'X'
     } 
 
@@ -58,7 +69,7 @@ const gamePlay = (() => {
             _changeTurn()
         }
     }
-    return {playTile, startGame}
+    return {playTile, startGame, newGame}
 })();
 
 
@@ -69,7 +80,8 @@ const displayController = (() => {
             tile.addEventListener('mousedown', gamePlay.playTile)
            
         }
-        document.getElementById('start').addEventListener('click', gamePlay.startGame)
+        document.getElementById('start-button').addEventListener('click', gamePlay.startGame)
+        document.getElementById('new-button').addEventListener('click', gamePlay.newGame)
     })();
 
     const changeTile = (index, tile) => {
@@ -81,13 +93,35 @@ const displayController = (() => {
         for (let i = 0; i < gameBoard.arr.length; i++) {
             let tile = document.getElementById(i+1)
             tile.innerText = ''
-        }
-    }
+        };
+        document.getElementById('winner-name').innerText = ''
+        turn = 'X'
+    };
 
-    return {changeTile, clear}
+    const menu = (() => {
+        const showReq = () => document.getElementById('req').style.display = 'block'
+        const toggle = () => {
+            let startMenu = document.getElementById('start-menu')
+            !startMenu.style.display | startMenu.style.display == 'none'? 
+                (startMenu.style.display = 'block', 
+                    document.getElementById('winner-menu').style.display = 'none') : 
+                startMenu.style.display ='none'
+        };
+        const showWinner = (winner) => {
+            document.getElementById('winner-menu').style.display = 'block'
+            let winnerName = document.getElementById('winner-name')
+            let winnerType = document.getElementById('winner-type')
+            winner == 'tie' ? winnerType.innerText = 'It\'s a Tie' :
+                winnerName.innerText = winner == 'X' ? players.one : players.two
+        }
+        return {showReq, toggle, showWinner};
+    })();
+
+    return {changeTile, clear, menu};
 })();
 
-
-const player = (name, letter) => {
-    return {name, letter}
+const players = () => {
+    one: ''
+    two: ''
 };
+
