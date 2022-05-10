@@ -9,7 +9,7 @@ h1 {
 
 #game-board {
     display:grid;
-    grid-template-columns: repeat(3, 22vh);
+    grid-template-columns: repeat(3, minmax(30vw, 22vh));
     grid-template-rows: repeat(3, 22vh);
     gap: 20px;
     background-color: rgb(238, 174, 255);
@@ -29,6 +29,7 @@ h1 {
     z-index: 2;
     position: absolute;
     width: 100vw;
+    
     height: 70vh;
     text-align: center;
     left: 0;
